@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('user_css') %>
+        <title>Node Js || User Edit</title>
+</head>
+
+<body>
+    <%- include('user_navbar', {active: "" , user:userdata, login:loggedin }) %>
+        <div class="container">
+            <section class="vh-100" style="margin-top: 20px;">
+                <h2 style="text-align:center; text-decoration: underline;">Edit User</h2>
+                <form method="post" action="/user/update" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="photo">Photo </label>
+                        <img src="http://localhost:5000/users/<%- edit.photo %>"
+                            style="width: 50px; height: 50px; float: right; margin-bottom: 5px;" alt="">
+                        <input type="file" class="form-control" id="photo" name="photo" aria-describedby="photo">
+                        <input type="hidden" value="<%- edit._id %>" id="id" name="id">
+                        <input type="hidden" value="<%- edit.photo %>" id="oldphoto" name="oldphoto">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" aria-describedby="name"
+                            placeholder="Enter Name" value="<%- edit.name %>" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Id</label>
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="email"
+                            placeholder="Enter email" value="<%- edit.email %>" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone No</label>
+                        <input type="number" class="form-control" id="phone" name="phone" aria-describedby="phone"
+                            placeholder="Enter Phone No" value="<%- edit.phone %>" required="required">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Password">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: -webkit-fill-available;">Save</button>
+                </form>
+
+            </section>
+        </div>
+        <%- include('user_footer') %>
+
+
+
+
+</body>
+
+</html>

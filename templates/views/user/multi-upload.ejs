@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('user_css') %>
+        <title>Node Js || Upload Multiple Files</title>
+</head>
+
+<body>
+    <%- include('user_navbar', {active: "multiples" , user:userdata, login:loggedin }) %>
+        <div class="container">
+            <section class="vh-100" style="margin-top: 20px;">
+                <form action="upload-multiples" enctype="multipart/form-data" method="post">
+                    <% if (show) { %>
+
+                        <% if (status=='200' ) { %>
+                            <div class="alert alert-success alert-dismissible fade show" id="S_200" role="alert">
+                                <strong>Status <%= status %></strong>
+                                <%= message %>
+                                    <a href="/upload-multiples" style="text-decoration: none;" class="close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </a>
+                            </div>
+                            <% } else { %>
+                                <div class="alert alert-danger alert-dismissible fade show" id="E_400" role="alert">
+                                    <strong>Status <%= status %></strong>
+                                    <%= message %>
+                                        <a href="/upload-multiples" style="text-decoration: none;" class="close">
+                                            <span aria-hidden=" true">&times;</span>
+                                        </a>
+                                </div>
+                                <% } %>
+
+                                    <% } %>
+                                        <div class="form-group">
+                                            <label for="multifile">Select File</label>
+                                            <input type="file" class="form-control" id="multifile" name="multifile"
+                                                multiple="multiple">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </section>
+        </div>
+        <%- include('user_footer') %>
+
+
+
+
+</body>
+
+</html>

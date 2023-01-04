@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../partials/css') %>
+        <title>Node Js Registration</title>
+</head>
+
+<body>
+    <%- include('../partials/navbar', {active: "index" }) %>
+        <section class="vh-100" style="margin-top: 20px;">
+            <div class="container-fluid h-custom">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-md-9 col-lg-6 col-xl-5">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                            class="img-fluid" alt="Sample image">
+                    </div>
+                    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+
+                        <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                            <p class="lead fw-normal mb-0 me-3">Register with</p>
+                            <button type="button" class="btn btn-primary btn-floating mx-1">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-floating mx-1">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-floating mx-1">
+                                <i class="fab fa-linkedin-in"></i>
+                            </button>
+                        </div>
+
+                        <div class="divider d-flex align-items-center my-4">
+                            <p class="text-center fw-bold mx-3 mb-0">Or</p>
+                        </div>
+
+                        <form method="post" action="/create" enctype="multipart/form-data">
+                            <% if (show) { %>
+                                <% if (status=='200' ) { %>
+                                    <div class="alert alert-success alert-dismissible fade show" id="S_200"
+                                        role="alert">
+                                        <strong>Status <%= status %></strong>
+                                        <%= message %>
+                                            <a href="/" style="text-decoration: none;" class="close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </a>
+                                    </div>
+                                    <% } else { %>
+                                        <div class="alert alert-danger alert-dismissible fade show" id="E_400"
+                                            role="alert">
+                                            <strong>Status <%= status %></strong>
+                                            <%= message %>
+                                                <a href="/" style="text-decoration: none;" class="close">
+                                                    <span aria-hidden=" true">&times;</span>
+                                                </a>
+                                        </div>
+                                        <% } %>
+                                            <% } %>
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        aria-describedby="name" placeholder="Enter Name"
+                                                        required="required">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">Email Id</label>
+                                                    <input type="email" class="form-control" id="email" name="email"
+                                                        aria-describedby="email" placeholder="Enter email"
+                                                        required="required">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="phone">Phone No</label>
+                                                    <input type="number" class="form-control" id="phone" name="phone"
+                                                        aria-describedby="phone" placeholder="Enter Phone No"
+                                                        required="required">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="password">Password</label>
+                                                    <input type="password" class="form-control" id="password"
+                                                        name="password" placeholder="Password" required="required">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password">Confirm Password</label>
+                                                    <input type="password" class="form-control" id="confirm_password"
+                                                        name="confirm_password" placeholder="Confirm Password"
+                                                        required="required">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="photo">Photo</label>
+                                                    <input type="file" class="form-control" id="photo" name="photo"
+                                                        aria-describedby="photo" required="required">
+                                                </div>
+                                                <div class="form-group form-check">
+                                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                    <label class="form-check-label" for="exampleCheck1">Check me
+                                                        out</label>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary"
+                                                    style="width: -webkit-fill-available;">Create</button>
+                        </form>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <%- include('../partials/footer') %>
+
+
+
+
+</body>
+
+</html>
