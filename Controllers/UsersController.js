@@ -401,27 +401,36 @@ async function DownloadFile(req, resp) {
 // const upload = multer({ storage: storage });
 // var multipleUpload = upload.fields([{ name: "multifile" }])
 async function UploadMultiples(req, resp) {
-    var total_file, total_faileds;
+    var total_file, total_files;
     if (!req.files) return resp.redirect(`/user/upload-multiples?status=400&message=${encodeURIComponent('Please select a file.')}`);
 
     total_file = req.files.multifile;
-    total_faileds = [];
+    total_files = [];
     if (total_file.length <= 0) return resp.redirect(`/user/upload-multiples?status=400&message=${encodeURIComponent('Please select a file.')}`);
-    total_file.forEach((value, key) => {
-        let fileIs = req.files.multifile[key];
-        let file_name = `${currentDateTime(fileIs.name)[0]}.${currentDateTime(fileIs.name)[1]}`;
-        fileIs.mv(`${multifiles_path}/${file_name}`, function (err) {
-            if (err) {
 
-            } else {
-                total_faileds.push(file_name);
-                console.log(total_faileds);
-            }
-        })
-    })
+    let waitdata = new Promise((resolve, reject) => {
+        total_file.forEach((value, key) => {
+            let fileIs = req.files.multifile[key];
+            let file_name = `${currentDateTime(fileIs.name)[0]}.${currentDateTime(fileIs.name)[1]}`;
+            //console.log("file_name", file_name, fileIs.name);
+            fileIs.mv(`${multifiles_path}/${file_name}`, function (err) {
+                if (err) {
 
-    console.log("yy ", total_faileds);
-    return resp.send(total_faileds);
+                } else {
+                    total_files.push(file_name);
+                    resolve(total_files);
+                    console.log("total_files", total_files);
+                }
+            })
+        });
+    });
+    let t = await waitdata;
+    console.log("await", t);
+    return resp.send(t);
+    // waitdata.then((data) => {
+    //     console.log("yy ", data);
+    //     return resp.send(t);
+    // });
 }
 
 async function UploadMultiplesGet(req, resp) {
