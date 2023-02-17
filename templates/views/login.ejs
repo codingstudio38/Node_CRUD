@@ -22,23 +22,9 @@
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
 
                         <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                            <p class="lead fw-normal mb-0 me-3">Login with</p>
-                            <button type="button" class="btn btn-primary btn-floating mx-1">
-                                <i class="fab fa-facebook-f"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-primary btn-floating mx-1">
-                                <i class="fab fa-twitter"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-primary btn-floating mx-1">
-                                <i class="fab fa-linkedin-in"></i>
-                            </button>
+                            <h2 class="mb-1 me-3">Login Here</h2>
                         </div>
 
-                        <div class="divider d-flex align-items-center my-4">
-                            <p class="text-center fw-bold mx-3 mb-0">Or</p>
-                        </div>
 
                         <form method="post" action="/login" enctype="multipart/form-data">
                             <% if (show) { %>
@@ -51,7 +37,7 @@
                                             <a href="/login" style="text-decoration: none;" class="close">
                                                 <span aria-hidden="true">&times;</span>
                                             </a>
-                                    </div> 
+                                    </div>
                                     <% } else { %>
                                         <div class="alert alert-danger alert-dismissible fade show" id="E_400"
                                             role="alert">
@@ -81,7 +67,21 @@
                                                 <button type="submit" class="btn btn-primary"
                                                     style="width: -webkit-fill-available;">Login</button>
                         </form>
-
+                        <div class="divider d-flex align-items-center my-2">
+                            <p class="text-center fw-bold mx-3 mb-0">Or</p>
+                        </div>
+                        <div
+                            class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start my-2">
+                            <button type="button" class="btn btn-primary  btn-block">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </button>
+                        </div>
+                        <div
+                            class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start my-2">
+                            <button type="button" class="btn btn-danger btn-block">
+                                <i class="fab fa-google"></i> Google
+                            </button>
+                        </div>
 
 
                     </div>
