@@ -418,11 +418,13 @@ async function UploadMultiples(req, resp) {
 
                 } else {
                     total_files.push(file_name);
-                    resolve(total_files);
-                    console.log("total_files", total_files);
                 }
             })
         });
+        setTimeout(() => {
+            resolve(total_files);
+            console.log("setTimeout", total_files);
+        }, 500)
     });
     let t = await waitdata;
     console.log("await", t);
