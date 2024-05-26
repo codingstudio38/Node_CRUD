@@ -9,11 +9,21 @@ var cors = require('cors')
 const express = require('express');
 //const hbs = require('hbs');
 const ejs = require('ejs');
-
+const expressSession = require("express-session");
 const cookieParser = require('cookie-parser');
+
+
+
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(expressSession({
+    "resave": false,
+    "saveUninitialized": true,
+    "lek": 'user_id',
+    "secret": 'user secret',
+    // cookie: { secure: true }
+}));
 app.use(express.urlencoded({ extended: false }));
 app.use(Fileupload());
 app.use(cors());
@@ -28,5 +38,5 @@ app.use(require('./routes/Route'));
 
 
 app.listen(port, () => {
-    // console.log(`server is running at port no ${port}`);
+    console.log(`server is running at port no ${port}`);
 });

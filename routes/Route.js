@@ -12,7 +12,7 @@ routeapp.post('/login', Middleware.Auth_LoggedIn, UsersController.UserLogin);
 
 
 routeapp.get('/user/home', Middleware.Auth, UsersController.UserHome);
-
+ 
 routeapp.get('/user/edit', Middleware.Auth, UsersController.UserDetail);
 
 routeapp.post('/user/update', Middleware.Auth, UsersController.UpdateUser);

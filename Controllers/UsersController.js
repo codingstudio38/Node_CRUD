@@ -74,7 +74,7 @@ async function LoginView(req, resp) {
         const data = { "show": show, "status": status_, "message": message_ };
         resp.render("login", data);
     } catch (error) {
-        return resp.status(400).json({ "status": 400, "message": "Failed..!!", "error": error });
+        return resp.status(400).json({ "status": 400, "message": "Failed..!!", "error": error.message });
     }
 }
 
@@ -146,7 +146,7 @@ async function CreateNew(req, resp) {
         });
 
     } catch (error) {
-        custom = JSON.stringify({ "error": error });
+        custom = JSON.stringify({ "error": error.message });
         return resp.redirect(`/?status=400&message=${encodeURIComponent('Failed..!! ' + custom)}. `);
     }
 }
@@ -165,15 +165,18 @@ async function UserLogin(req, resp) {
             if (validPassword) {
                 const token = await user.generateAuthToken();
                 const U = { 'email': user.email, 'name': user.name, 'phone': user.phone, 'photo': user.photo, '_id': user._id, 'token': token };
-
-                resp.cookie("login_user_details", JSON.stringify(JSON.stringify(U)));
-                if (req.cookies.login_user_details === undefined) {
+                // console.log(req.sessionID);
+                // resp.cookie("login_user_details", JSON.stringify(JSON.stringify(U)));
+                req.session.loggedin_user = U;
+                // console.log(req.session.loggedin_user);
+                if (req.session.loggedin_user === undefined) {//req.cookies.login_user_details 
                     cookie_data = false;
                 } else {
                     cookie_data = true;
                 }
                 if (cookie_data) {
-                    console.log(JSON.parse(JSON.parse(req.cookies.login_user_details)));
+                    // console.log(req.session.loggedin_user);
+                    // console.log(JSON.parse(JSON.parse(req.cookies.login_user_details)));//req.cookies.login_user_details
                 }
                 return resp.redirect(`/user/home?status=200&message=${encodeURIComponent('Successfully logged in')}.`);
             } else {
@@ -181,12 +184,39 @@ async function UserLogin(req, resp) {
             }
         }
     } catch (error) {
-        custom = JSON.stringify({ "error": error });
+        custom = error.message;
         return resp.redirect(`/login?status=400&message=${encodeURIComponent('Failed..!! ' + custom)}.`);
     }
 
 }
 
+
+async function UserLogout(req, resp) {
+    try {
+        let userdata = LoginUserData(req, resp);
+        // req.user.tokens = req.user.tokens.filter((items, index) => {
+        //     return items.token !== req.token;
+        // })
+        req.user.tokens = [];
+        let respons = await req.user.save();
+        // resp.clearCookie("login_user_details");
+        delete req.session.loggedin_user;
+        // req.session = null;
+        // const sessionID = req.session.id;
+        // req.sessionStore.destroy(sessionID, (err) => {
+        //     // callback function. If an error occurs, it will be accessible here.
+        //     if (err) {
+        //         return console.error(err)
+        //     }
+        //     console.log("The session has been destroyed!")
+        // })
+        // req.session.distroy();
+        return resp.redirect(`/login?status=200&message=${encodeURIComponent('Successfully logged out.')}`);
+    } catch (error) {
+        let custom = JSON.stringify({ "error": error.message });
+        return resp.redirect(`/user/home?status=400&message=${encodeURIComponent('Failed..!! ' + custom)}.`);
+    }
+}
 
 async function UserHome(req, resp) {
     try {
@@ -354,21 +384,7 @@ async function DeleteUser(req, resp) {
 
 }
 
-async function UserLogout(req, resp) {
-    try {
-        let userdata = LoginUserData(req, resp);
-        // req.user.tokens = req.user.tokens.filter((items, index) => {
-        //     return items.token !== req.token;
-        // })
-        req.user.tokens = [];
-        let respons = await req.user.save();
-        resp.clearCookie("login_user_details");
-        return resp.redirect(`/login?status=200&message=${encodeURIComponent('Successfully logged out.')}`);
-    } catch (error) {
-        let custom = JSON.stringify({ "error": error });
-        return resp.redirect(`/user/home?status=400&message=${encodeURIComponent('Failed..!! ' + custom)}.`);
-    }
-}
+
 async function DownloadFile(req, resp) {
     const filePath = user_files + "/" + req.params.filename;
     if (fs.existsSync(`${filePath}`)) {
